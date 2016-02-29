@@ -21,11 +21,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         //instantiate classes
-        InstrumentSelectedAction insrumentAction = new InstrumentSelectedAction();
+        InstrumentSelectedAction instrumentAction = new InstrumentSelectedAction();
 
 
         //invoke controls event setting methods
-        InstrumentSelected.setOnClickListener(insrumentAction);
+        InstrumentSelected.setOnClickListener(instrumentAction);
     }
 
     //Button click listener

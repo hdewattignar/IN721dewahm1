@@ -12,5 +12,108 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Enroll For Music Lessons!"
+        android:textSize="30dp"
+
+        android:id="@+id/txtTitle"
+        android:textColor="#080808" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/txtTitle"
+        android:background="@color/colorTitleText"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chose Your Instrument"
+        android:id="@+id/txtInstrumentTitle"
+        android:layout_below="@+id/txtTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/margin_top"
+        android:layout_marginLeft="@dimen/text_view_margin_left"
+
+        />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:id="@+id/rgInstrumentSelection"
+        android:layout_below="@+id/txtInstrumentTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accordian"
+            android:id="@+id/rbAccordian"
+            android:checked="false" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Basson"
+            android:id="@+id/rbBasson"
+            android:checked="false" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cello"
+            android:id="@+id/rbCello"
+            android:checked="false" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="When Do You Want To Start"
+        android:id="@+id/monthTitle"
+        android:layout_below="@+id/rgInstrumentSelection"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="@dimen/text_view_margin_left"
+        android:layout_marginTop="@dimen/margin_top"
+        />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spMonths"
+        android:layout_below="@+id/monthTitle"
+        android:layout_marginTop="@dimen/margin_top"
+        android:layout_toRightOf="@+id/txtSubmitMessage"
+        android:layout_toEndOf="@+id/txtSubmitMessage" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/spMonths"
+        android:layout_marginTop="@dimen/margin_top"
+        android:background="@color/colorTitleText"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enroll"
+        android:id="@+id/btnEnroll"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="80dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/txtSubmitMessage"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:textSize="20dp"
+        />
+
 </RelativeLayout>
