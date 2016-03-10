@@ -1,4 +1,4 @@
-package bit.dewahm1.welcometodunedin;
+package bit.dewahm1.welcomedun_drawer;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,10 +14,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         SetupListView();
 
-        ListView navigationList = (ListView) findViewById(R.id.listView_DunedinActivities);
+        ListView navigationList = (ListView) findViewById(R.id.lv_selection);
         navigationList.setOnItemClickListener(new ListViewNavigation());
 
     }
@@ -27,9 +25,9 @@ public class MainActivity extends AppCompatActivity {
     {
         String[] navigationCategories = {"Activities", "Shopping", "Dining", "Services"};
 
-        ArrayAdapter<String> navigationAdapter = new ArrayAdapter<String>(this, R.layout.navigation_layout, navigationCategories);
+        ArrayAdapter<String> navigationAdapter = new ArrayAdapter<String>(this, R.layout.activity_activities, navigationCategories);
 
-        ListView dunedinActivitiesListView = (ListView) findViewById(R.id.listView_DunedinActivities);
+        ListView dunedinActivitiesListView = (ListView) findViewById(R.id.lv_selection);
 
         dunedinActivitiesListView.setAdapter(navigationAdapter);
     }
