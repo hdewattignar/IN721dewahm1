@@ -17,22 +17,32 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/fragmentPlaceholder"
-        android:layout_above="@+id/btn_ShowImg"></LinearLayout>
+        />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Show image"
         android:id="@+id/btn_ShowImg"
+        android:layout_alignTop="@+id/btn_showlistview"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show List View"
+        android:id="@+id/btn_showlistview"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/fragmentPlaceholder"
-        android:layout_toEndOf="@+id/fragmentPlaceholder"
-        android:layout_marginLeft="35dp"
-        android:layout_marginStart="35dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginEnd="30dp"
+        />
 </RelativeLayout>

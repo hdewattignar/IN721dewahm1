@@ -18,19 +18,34 @@ public class MainActivity extends AppCompatActivity {
 
         //get button resource
         Button showImage = (Button) findViewById(R.id.btn_ShowImg);
+        Button showListView = (Button) findViewById(R.id.btn_showlistview);
         //create an instance of the onclicklistener
         ClickShowImage clickshowimage = new ClickShowImage();
+        ClickShowListView clickshowlistview = new ClickShowListView();
         //set the buttons onclick
         showImage.setOnClickListener(clickshowimage);
+        showListView.setOnClickListener(clickshowlistview);
     }
 
     class ClickShowImage implements View.OnClickListener{
-
-
         @Override
         public void onClick(View v) {
 
             Fragment dynamicFragment = new Fragment_Photo();
+            FragmentManager fm = getFragmentManager();
+
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.fragmentPlaceholder, dynamicFragment);
+            ft.commit();
+
+        }
+    }
+
+    class ClickShowListView implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+
+            Fragment dynamicFragment = new FragmentListView();
             FragmentManager fm = getFragmentManager();
 
             FragmentTransaction ft = fm.beginTransaction();
