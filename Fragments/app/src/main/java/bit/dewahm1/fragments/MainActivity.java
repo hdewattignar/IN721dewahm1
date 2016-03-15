@@ -14,11 +14,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.tablet_layout);
 
         //get button resource
-        Button showImage = (Button) findViewById(R.id.btn_ShowImg);
-        Button showListView = (Button) findViewById(R.id.btn_showlistview);
+        Button showImage = (Button) findViewById(R.id.btn_showPhoto_tablet);
+        Button showListView = (Button) findViewById(R.id.btn_showPhoto_tablet);
         //create an instance of the onclicklistener
         ClickShowImage clickshowimage = new ClickShowImage();
         ClickShowListView clickshowlistview = new ClickShowListView();
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             FragmentManager fm = getFragmentManager();
 
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.fragmentPlaceholder, dynamicFragment);
+            ft.replace(R.id.ll_showImgPlaceholder, dynamicFragment);
             ft.commit();
 
         }
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             FragmentManager fm = getFragmentManager();
 
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.fragmentPlaceholder, dynamicFragment);
+            ft.replace(R.id.ll_showListPlaceholder, dynamicFragment);
             ft.commit();
 
         }
