@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         //get button resource
         Button showImage = (Button) findViewById(R.id.btn_showPhoto_tablet);
-        Button showListView = (Button) findViewById(R.id.btn_showPhoto_tablet);
+        Button showListView = (Button) findViewById(R.id.btn_showList_tablet);
         //create an instance of the onclicklistener
         ClickShowImage clickshowimage = new ClickShowImage();
         ClickShowListView clickshowlistview = new ClickShowListView();
