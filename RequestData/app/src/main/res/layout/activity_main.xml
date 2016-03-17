@@ -27,4 +27,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="34dp"
         android:textSize="16dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Text Colour"
+        android:id="@+id/btn_textcolour"
+        android:layout_below="@+id/tv_mainscreen_main"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp" />
 </RelativeLayout>
