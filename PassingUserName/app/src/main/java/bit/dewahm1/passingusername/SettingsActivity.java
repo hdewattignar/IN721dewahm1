@@ -16,7 +16,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        Button setUserNameButton = (Button) findViewById(R.id.btn_settings);
+        Button setUserNameButton = (Button) findViewById(R.id.btn_returnToMain);
         setNewUsername setuser = new setNewUsername();
         setUserNameButton.setOnClickListener(setuser);
     }
