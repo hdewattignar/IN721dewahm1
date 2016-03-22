@@ -35,25 +35,6 @@ public class DialogBox extends DialogFragment {
         return customDialog;
     }
 
-/*
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View dialogView = inflater.inflate(R.layout.dialog_fragment_layout, container);
-
-        Dialog dialogWindow = getDialog();
-        dialogWindow.setTitle("Really enrol for");
-
-        Button yesButton = (Button) dialogView.findViewById(R.id.btn_Yes);
-        Button noButton = (Button) dialogView.findViewById(R.id.btn_No);
-
-        yesButton.setOnClickListener(new YesButtonHandler());
-        noButton.setOnClickListener(new NoButtonHandler());
-
-        return dialogView;
-    }
-
-*/
     public class YesButtonHandler implements DialogInterface.OnClickListener
     {
 

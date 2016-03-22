@@ -16,6 +16,13 @@ public class MainActivity extends AppCompatActivity {
 
     DialogBox confirmEnrolment;
 
+    String chosenInstrmentText;
+    String monthText;
+
+    RadioGroup InstrumentGroup;
+    Spinner selectedMonth;
+    RadioButton chosenInstrument;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,16 +40,31 @@ public class MainActivity extends AppCompatActivity {
         //populate spinner
         PopulateSpinner();
 
+
+
     }
 
     public void DialogBoxConfirm(boolean enrolConfirm)
     {
         confirmEnrolment.dismiss();
-        
+
+        //get reference to the radio group
+        InstrumentGroup = (RadioGroup) findViewById(R.id.rgInstrumentSelection);
+        selectedMonth = (Spinner) findViewById(R.id.spMonths);
+
+        //get the selected radio button
+        chosenInstrument = (RadioButton) findViewById(InstrumentGroup.getCheckedRadioButtonId());
+
+        //get the text from the radio button
+        chosenInstrmentText = chosenInstrument.getText().toString();
+
+        // get the text from the selected spinner option
+        monthText = selectedMonth.getSelectedItem().toString();
+
         if(enrolConfirm)
         {
             //feed back string to be printed
-            String instrumentDisplayString = "You Have Enroled ";
+            String instrumentDisplayString = "You Have Enroled For" + chosenInstrmentText + " Lessons In " + monthText;
 
             //set the set in the text view
             TextView txtDisplayInstumentFeedback = (TextView) findViewById(R.id.txtSubmitMessage);
@@ -63,29 +85,22 @@ public class MainActivity extends AppCompatActivity {
     public class DialogButtonHandler implements View.OnClickListener
     {
 
-        //get reference to the radio group
-        RadioGroup InstrumentGroup = (RadioGroup) findViewById(R.id.rgInstrumentSelection);
-        Spinner selectedMonth = (Spinner) findViewById(R.id.spMonths);
-
-        //get the selected radio button
-        RadioButton chosenInstrument = (RadioButton) findViewById(InstrumentGroup.getCheckedRadioButtonId());
-
-        //get the text from the radio button
-        String chosenInstrmentText = chosenInstrument.getText().toString();
-
-        // get the text from the selected spinner option
-        String monthText = selectedMonth.getSelectedItem().toString();
-
         @Override
         public void onClick(View v) {
             FragmentManager fm = getFragmentManager();
             confirmEnrolment = new DialogBox();
             confirmEnrolment.show(fm, "confirm");
         }
-
+/*
         public void DialogBoxConfirm(boolean enrolConfirm)
         {
             confirmEnrolment.dismiss();
+
+            //get the text from the radio button
+            chosenInstrmentText = chosenInstrument.getText().toString();
+
+            // get the text from the selected spinner option
+            monthText = selectedMonth.getSelectedItem().toString();
 
             if(enrolConfirm)
             {
@@ -107,9 +122,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+        */
     }
-
-
 
     public void PopulateSpinner(){
 
@@ -140,34 +154,4 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> monthAdapter = new ArrayAdapter<String>(MainActivity.this, layoutID, months);
         monthSpinner.setAdapter(monthAdapter);
     }
-
-    /*
-    class InstrumentSelectedAction implements View.OnClickListener
-    {
-
-        @Override
-        public void onClick(View v) {
-
-            //get reference to the radio group
-            RadioGroup InstrumentGroup = (RadioGroup) findViewById(R.id.rgInstrumentSelection);
-            Spinner selectedMonth = (Spinner) findViewById(R.id.spMonths);
-
-            //get the selected radio button
-            RadioButton chosenInstrument = (RadioButton) findViewById(InstrumentGroup.getCheckedRadioButtonId());
-
-            //get the text from the radio button
-            String chosenInstrmentText = chosenInstrument.getText().toString();
-
-            // get the text from the selected spinner option
-            String monthText = selectedMonth.getSelectedItem().toString();
-
-            //feed back string to be printed
-            String instrumentDisplayString = "You Have Enroled For " + chosenInstrmentText + " Lessons In " + monthText;
-
-            //set the set in the text view
-            TextView txtDisplayInstumentFeedback = (TextView) findViewById(R.id.txtSubmitMessage);
-            txtDisplayInstumentFeedback.setText(instrumentDisplayString);
-        }
-    }
-    */
 }
