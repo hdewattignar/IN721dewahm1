@@ -3,8 +3,9 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
+
     defaultConfig {
-        applicationId 'bit.dewahm1.musicApp_v2'
+        applicationId "bit.dewahm1.complexscreencontrols_spinner_p22t2"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -15,8 +16,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-    productFlavors {
     }
 }
 
