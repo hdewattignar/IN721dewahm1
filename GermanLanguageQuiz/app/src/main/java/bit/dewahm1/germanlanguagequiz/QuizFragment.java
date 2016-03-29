@@ -73,9 +73,9 @@ public class QuizFragment extends Fragment {
     }
 
     //build the feedback dialog box fragment
-    public class FeedBackDialog extends DialogFragment
+    public class FeedBackDialogBox extends DialogFragment
     {
-        public FeedBackDialog(){}
+        public FeedBackDialogBox(){}
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -103,14 +103,18 @@ public class QuizFragment extends Fragment {
         public void onClick(View v) {
 
             //shows the dialog fragment
-            FeedBackDialog feedBackDialog = new FeedBackDialog();
+            FeedBackDialogBox feedBackDialog = new FeedBackDialogBox();
             FragmentManager fm = getFragmentManager();
+
+            feedBackDialog.setCancelable(false);
             feedBackDialog.show(fm, "continue");
         }
     }
 
     public class DialogButtonHandler implements DialogInterface.OnClickListener
     {
+
+
         @Override
         public void onClick(DialogInterface dialog, int which) {
 
