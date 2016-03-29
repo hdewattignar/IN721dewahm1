@@ -27,14 +27,17 @@ public class QuizFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstaceState)
     {
+        //inflate the fragment layout
         View fragmantView = inflater.inflate(R.layout.quiz_fragment, container, false);
 
+        //set the image to the image passed in by getArguments()
         ImageView fragmentImage = (ImageView) fragmantView.findViewById(R.id.image_QuestionImage);
         fragmentImage.setImageResource(getArguments().getInt("image"));
 
+        //get the radio group
         radiogroupOptions = (RadioGroup) fragmantView.findViewById(R.id.rg_articleSelection);
 
-
+        //wire up submit button
         Button submitButton = (Button) fragmantView.findViewById(R.id.btn_Submit);
         AnswerButtonHandler answer = new AnswerButtonHandler();
         submitButton.setOnClickListener(answer);
@@ -46,9 +49,10 @@ public class QuizFragment extends Fragment {
     {
         Boolean correctAnswer;
 
+        //get the selected radio button
         selectedRadioButton = (RadioButton) radiogroupOptions.findViewById(radiogroupOptions.getCheckedRadioButtonId());
-        //selectedRadioButton.findViewById(radiogroupOptions.getCheckedRadioButtonId());
 
+        //check radio button text against the article passed in from getArguments()
         if(getArguments().getString("article").equals(selectedRadioButton.getText()))
         {
             correctAnswer = true;
@@ -61,12 +65,14 @@ public class QuizFragment extends Fragment {
         return correctAnswer;
     }
 
+    //pass back to question activity with result of question
     public void getNextQuestion()
     {
         QuizActivity quiz = (QuizActivity) getActivity();
         quiz.getResult(isAnswerCorrect());
     }
 
+    //build the feedback dialog box fragment
     public class FeedBackDialog extends DialogFragment
     {
         public FeedBackDialog(){}
@@ -89,12 +95,14 @@ public class QuizFragment extends Fragment {
         }
     }
 
+    //Button handler for the sumbit button
     public class AnswerButtonHandler implements View.OnClickListener
     {
 
         @Override
         public void onClick(View v) {
 
+            //shows the dialog fragment
             FeedBackDialog feedBackDialog = new FeedBackDialog();
             FragmentManager fm = getFragmentManager();
             feedBackDialog.show(fm, "continue");
@@ -103,7 +111,6 @@ public class QuizFragment extends Fragment {
 
     public class DialogButtonHandler implements DialogInterface.OnClickListener
     {
-
         @Override
         public void onClick(DialogInterface dialog, int which) {
 
