@@ -1,3 +1,6 @@
+package bit.dewahm1.germanlanguagequiz;
+
+import android.content.res.Resources;
 import android.media.Image;
 
 /**
@@ -5,20 +8,20 @@ import android.media.Image;
  */
 public class Question {
 
-    private String image;
+    private int image;
     private String article;
 
-    public Question(String image, String article)
+    public Question(int image, String article)
     {
         this.setImage(image);
         this.setArticle(article);
     }
 
-    public String getImage() {
+    public int getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(int image) {
         this.image = image;
     }
 
