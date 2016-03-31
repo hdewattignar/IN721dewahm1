@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 /**
  * Created by Hayden on 3/29/2016.
@@ -41,6 +42,12 @@ public class QuizFragment extends Fragment {
         Button submitButton = (Button) fragmantView.findViewById(R.id.btn_Submit);
         AnswerButtonHandler answer = new AnswerButtonHandler();
         submitButton.setOnClickListener(answer);
+
+        //setup score display
+        int currentQuestionNumber = getArguments().getInt("currentQuestion");
+        int numQuestions = getArguments().getInt("total");
+        TextView scoreDisplay = (TextView)fragmantView.findViewById(R.id.tv_runningTotal);
+        scoreDisplay.setText(currentQuestionNumber + "/" + numQuestions);
 
         return fragmantView;
     }

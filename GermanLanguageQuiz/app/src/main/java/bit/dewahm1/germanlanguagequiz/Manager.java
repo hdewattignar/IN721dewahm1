@@ -12,6 +12,7 @@ public class Manager {
     Random swap = new Random();
     int score;
     int questionNumber;
+    int totalQuestions;
 
     public Manager() {
 
@@ -48,6 +49,8 @@ public class Manager {
             questionList.set(swap1, questionList.get(swap2));
             questionList.set(swap2, temp);
         }
+
+        totalQuestions = questionList.size();
     }
 
     public Question getNextQuestion()

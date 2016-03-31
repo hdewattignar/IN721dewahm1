@@ -52,6 +52,8 @@ public class QuizActivity extends AppCompatActivity {
             //create a bundle and add the image reference and article of the current question
             Bundle newBundle = new Bundle();
             newBundle.putInt("image", nextQuestion.getImage());
+            newBundle.putInt("currentQuestion", manager.questionNumber);
+            newBundle.putInt("total", manager.totalQuestions);
             newBundle.putString("article", nextQuestion.getArticle());
 
             //create the fragment
