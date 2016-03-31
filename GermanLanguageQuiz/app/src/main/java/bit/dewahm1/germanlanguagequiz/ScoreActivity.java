@@ -25,8 +25,9 @@ public class ScoreActivity extends AppCompatActivity {
 
         //set the score in the display
         int score = scoreData.getInt("score");
+        int total = scoreData.getInt("total");
         TextView scoreView = (TextView) findViewById(R.id.tv_Score);
-        scoreView.setText(Integer.toString(score));
+        scoreView.setText(Integer.toString(score) + "/" + total);
     }
 
     public class GoBackToStart implements View.OnClickListener

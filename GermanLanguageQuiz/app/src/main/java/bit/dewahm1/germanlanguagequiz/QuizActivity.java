@@ -71,6 +71,7 @@ public class QuizActivity extends AppCompatActivity {
 
         Intent changeToScoreActivity = new Intent(QuizActivity.this, ScoreActivity.class);
         changeToScoreActivity.putExtra("score", manager.score);
+        changeToScoreActivity.putExtra("total", manager.questionNumber);
         startActivity(changeToScoreActivity);
     }
 

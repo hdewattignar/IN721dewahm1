@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="Der"
             android:id="@+id/rb_Der"
-            android:checked="true" />
+            android:checked="false" />
 
         <RadioButton
             android:layout_width="wrap_content"

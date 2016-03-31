@@ -22,8 +22,8 @@ public class Manager {
 
     public void setupGame()
     {
-        score=0;
-        questionNumber =0;
+        score = 0;
+        questionNumber = 0;
 
         questionList.add(new Question(R.drawable.apple, "Der"));
         questionList.add(new Question(R.drawable.car, "Das"));

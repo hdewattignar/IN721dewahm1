@@ -102,10 +102,19 @@ public class QuizFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
-            //shows the dialog fragment
-            FeedBackDialog feedBackDialog = new FeedBackDialog();
-            FragmentManager fm = getFragmentManager();
-            feedBackDialog.show(fm, "continue");
+            RadioGroup rg = (RadioGroup)getActivity().findViewById(R.id.rg_articleSelection);
+
+            if (rg.getCheckedRadioButtonId() == -1) {
+
+            }
+            else
+            {
+                //shows the dialog fragment
+                FeedBackDialog feedBackDialog = new FeedBackDialog();
+                FragmentManager fm = getFragmentManager();
+                feedBackDialog.show(fm, "continue");
+            }
+
         }
     }
 
