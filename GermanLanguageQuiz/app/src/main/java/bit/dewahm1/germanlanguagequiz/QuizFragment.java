@@ -80,9 +80,9 @@ public class QuizFragment extends Fragment {
     }
 
     //build the feedback dialog box fragment
-    public class FeedBackDialog extends DialogFragment
+    public class FeedBackDialogBox extends DialogFragment
     {
-        public FeedBackDialog(){}
+        public FeedBackDialogBox(){}
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -109,6 +109,7 @@ public class QuizFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
+<<<<<<< HEAD
             RadioGroup rg = (RadioGroup)getActivity().findViewById(R.id.rg_articleSelection);
 
             if (rg.getCheckedRadioButtonId() == -1) {
@@ -122,11 +123,21 @@ public class QuizFragment extends Fragment {
                 feedBackDialog.show(fm, "continue");
             }
 
+=======
+            //shows the dialog fragment
+            FeedBackDialogBox feedBackDialog = new FeedBackDialogBox();
+            FragmentManager fm = getFragmentManager();
+
+            feedBackDialog.setCancelable(false);
+            feedBackDialog.show(fm, "continue");
+>>>>>>> origin/master
         }
     }
 
     public class DialogButtonHandler implements DialogInterface.OnClickListener
     {
+
+
         @Override
         public void onClick(DialogInterface dialog, int which) {
 
