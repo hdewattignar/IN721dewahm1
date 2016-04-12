@@ -4,9 +4,11 @@ import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,11 +33,15 @@ public class MainActivity extends AppCompatActivity {
         Button btnFillList = (Button)findViewById(R.id.btn_fillList);
         FillListButtonHandler handler = new FillListButtonHandler();
         btnFillList.setOnClickListener(handler);
+
+        //wire up the listview
+        ListView lvDunedinEvents = (ListView)findViewById(R.id.listView_dunedinEventsList);
+        onListViewClickHandler listHandler = new onListViewClickHandler();
+        lvDunedinEvents.setOnItemClickListener(listHandler);
     }
 
     public class FillListButtonHandler implements View.OnClickListener
     {
-
         @Override
         public void onClick(View v) {
 
@@ -58,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         events.setAdapter(adapter);
     }//End populateList
 
-    public ArrayList<String> toArray(String JSONNinput) {
+    public ArrayList<String> toArray(String JSONinput) {
 
         ArrayList<String> output = new ArrayList<String>();
 
@@ -121,4 +127,39 @@ public class MainActivity extends AppCompatActivity {
 
         return input;
     }//END makeJSONString
+
+    public void eventToast(String JSONInput, int position){
+
+        ListView eventList = (ListView)findViewById(R.id.listView_dunedinEventsList);
+
+        try {
+            JSONObject eventData = new JSONObject(JSONInput);
+            JSONObject eventObject = eventData.getJSONObject("events");
+            JSONArray objectArray = eventObject.getJSONArray("event");
+            int nEvents = objectArray.length();
+
+            //loop through the array and find the event the user clicked
+            for (int i=0; i < nEvents; i++){
+                JSONObject currentEventObject = objectArray.getJSONObject(i);
+                String eventName = currentEventObject.getString("title");
+
+                if(eventName.equals(eventList.getItemAtPosition(position).toString())){
+
+                    //pop a toast with the event description
+                    String eventDescription = currentEventObject.getString("description");
+                    Toast.makeText(this, eventDescription, Toast.LENGTH_LONG).show();
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public class onListViewClickHandler implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //
+            eventToast(JSONinput, position);
+        }
+    }
 }
