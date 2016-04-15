@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     String JSONrawData;
-    String JSONDunedinEvents;
+    //String JSONinput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

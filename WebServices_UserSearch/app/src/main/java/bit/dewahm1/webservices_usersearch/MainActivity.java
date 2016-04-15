@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -22,21 +23,34 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    String userString;
+    String JSONrawData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btn = (Button)findViewById(R.id.btn_fillList);
+        Button btn = (Button)findViewById(R.id.btn_search);
         FillListButtonHandler btnHandler = new FillListButtonHandler();
         btn.setOnClickListener(btnHandler);
 
+
+    }
+
+    public String getUserInput() {
+
+        EditText userinput = (EditText)findViewById(R.id.editText);
+        userString = userinput.getText().toString();
+        return userString;
     }
 
     public class FillListButtonHandler implements View.OnClickListener
     {
         @Override
         public void onClick(View v) {
+
+            getUserInput();
 
             makeConnection APITread = new makeConnection();
             APITread.execute();
@@ -50,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(Void... params) {
             try{
                 String urlString =  "http://ws.audioscrobbler.com/2.0/?" +
-                        "method=chart.getTopArtists&" +
+                        "method=artist.getSimilar&" +
+                        "artist=" + userString + "&" +
                         "api_key=58384a2141a4b9737eacb9d0989b8a8c&" +
                         "limit=10&format=json";
 
@@ -115,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
             JSONObject eventData = new JSONObject(JSONinput);
 
             //make JSON object with a key from eventData
-            JSONObject eventobj = eventData.getJSONObject("artists");
+            JSONObject eventobj = eventData.getJSONObject("similarartists");
 
             //make an array of 'event' from eventobj
             JSONArray objectArray = eventobj.getJSONArray("artist");
@@ -127,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 //get the 'title' from each object in the array and add it to output
                 JSONObject currentobj = objectArray.getJSONObject(i);
-                String eventName = currentobj.getString("name") + "  "+ currentobj.getString("listeners");
+                String eventName = currentobj.getString("name");
                 output.add(eventName);
             }
         }
@@ -140,5 +155,4 @@ public class MainActivity extends AppCompatActivity {
         return output;
     }//END toArray
 
-    }
 }
