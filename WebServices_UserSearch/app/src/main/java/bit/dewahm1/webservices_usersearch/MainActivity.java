@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //wire up buttons
         Button btn = (Button)findViewById(R.id.btn_search);
         FillListButtonHandler btnHandler = new FillListButtonHandler();
         btn.setOnClickListener(btnHandler);
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String getUserInput() {
-
+        //get the text from the editText
         EditText userinput = (EditText)findViewById(R.id.editText);
         userString = userinput.getText().toString();
         return userString;
@@ -53,43 +54,40 @@ public class MainActivity extends AppCompatActivity {
             getUserInput();
 
             makeConnection APITread = new makeConnection();
-            APITread.execute();
+            APITread.execute(getUserInput());
         }
     }//END FillListButtonHandler
 
-    class makeConnection extends AsyncTask<Void,Void,String>
+    class makeConnection extends AsyncTask<String,Void,String>
     {
 
         @Override
-        protected String doInBackground(Void... params) {
+        protected String doInBackground(String... userString) {
             try{
+                //set the url including the user input
                 String urlString =  "http://ws.audioscrobbler.com/2.0/?" +
                         "method=artist.getSimilar&" +
                         "artist=" + userString + "&" +
                         "api_key=58384a2141a4b9737eacb9d0989b8a8c&" +
                         "limit=10&format=json";
 
+                //create a url from the string
                 URL URLObject = new URL(urlString);
-
+                //create a connection
                 HttpURLConnection connection = (HttpURLConnection) URLObject.openConnection();
-
                 connection.connect();
-
+                //record the response code. 200 means the connection is working
                 int responseCode = connection.getResponseCode();
-
+                //get the data from the connection and build a string
                 InputStream inputStream = connection.getInputStream();
-
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-                String resposeString;
-
+                String responseString;
                 StringBuilder stringBuilder = new StringBuilder();
 
-                while((resposeString = bufferedReader.readLine()) != null)
+                while((responseString = bufferedReader.readLine()) != null)
                 {
-                    stringBuilder = stringBuilder.append(resposeString);
+                    stringBuilder = stringBuilder.append(responseString);
                 }
 
                 JSONrawData = stringBuilder.toString();
@@ -129,18 +127,18 @@ public class MainActivity extends AppCompatActivity {
             //make JSON object from JSONinput
             JSONObject eventData = new JSONObject(JSONinput);
 
-            //make JSON object with a key from eventData
+            //make JSON object
             JSONObject eventobj = eventData.getJSONObject("similarartists");
 
-            //make an array of 'event' from eventobj
+            //make an array
             JSONArray objectArray = eventobj.getJSONArray("artist");
 
             //get the length of the array
             int n = objectArray.length();
 
+            //loop through the array getting the data required
             for(int i = 0;i < n; i++)
             {
-                //get the 'title' from each object in the array and add it to output
                 JSONObject currentobj = objectArray.getJSONObject(i);
                 String eventName = currentobj.getString("name");
                 output.add(eventName);
@@ -151,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        //return the array of 'title' strings
+
         return output;
     }//END toArray
 
