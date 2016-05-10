@@ -80,6 +80,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/txt_latitude"
+        android:layout_toStartOf="@+id/txt_latitude"
+        android:layout_below="@+id/txt_closestCitylabel" />
 </RelativeLayout>
