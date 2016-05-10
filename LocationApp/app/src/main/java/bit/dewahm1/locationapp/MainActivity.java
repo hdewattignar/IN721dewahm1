@@ -15,14 +15,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    int latitude;
-    int longitude;
+    double latitude;
+    double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,33 +36,34 @@ public class MainActivity extends AppCompatActivity {
 
     public void generateLocation() {
 
+        longitude = setLatorLong(90);
+        latitude = setLatorLong(180);
+    }
+
+    public void setDisplay()
+    {
         TextView longitudeText = (TextView)findViewById(R.id.txt_longitude);
         TextView latitudeText = (TextView)findViewById(R.id.txt_latitude);
 
-        longitude = setLatorLong(90);
-        latitude = setLatorLong(180);
-
-
-        longitudeText.setText(Integer.toString(longitude));
-        latitudeText.setText(Integer.toString(latitude));
-
+        longitudeText.setText(Double.toString(longitude));
+        latitudeText.setText(Double.toString(latitude));
     }
 
-    public int setLatorLong(int max)
+    public double setLatorLong(int max)
     {
         Random rnd = new Random();
 
-        int value = rnd.nextInt(max - rnd.nextInt(max));
+        double value = rnd.nextInt(max - rnd.nextInt(max));
 
         return value;
     }
 
 
-    public void setCity(String json)
+    public String setCity(String json)
     {
+        String city = null;
         try{
             JSONObject locationData = new JSONObject(json);
-            String city;
             city = locationData.getString("geoplugin_place");
             TextView cityText = (TextView)findViewById(R.id.txt_closestCity);
             cityText.setText(city);
@@ -72,66 +73,105 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        return city;
     }
 
     private class TeleportButtonHandler implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-            generateLocation();
-            makeConnection connect = new makeConnection();
-            connect.execute();
+
+            getCityAsync APIThread = new getCityAsync();
+            APIThread.execute();
         }
     }
 
-    class makeConnection extends AsyncTask<Void,Void,String>
+    class getCityAsync extends AsyncTask<Void,Void,String>
     {
 
         @Override
         protected String doInBackground(Void... params) {
+            String JSON = null;
 
-            String rawJSON = "";
+            while(getCity(JSON) == null) {
 
-            try{
-                String urlString =  "http://www.geoplugin.net/extras/location.gp?lat=-45.8787605&long=170.5027976&format=json";
+                generateLocation();
 
-                URL URLObject = new URL(urlString);
+                String urlString = "http://www.geoplugin.net/extras/location.gp?" +
+                        "lat=" + latitude +
+                        "&long=" + longitude +
+                        "&format=json";
 
-                HttpURLConnection connection = (HttpURLConnection) URLObject.openConnection();
-
-                connection.connect();
-
-                int responseCode = connection.getResponseCode();
-
-                InputStream inputStream = connection.getInputStream();
-
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-                String resposeString;
-
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while((resposeString = bufferedReader.readLine()) != null)
-                {
-                    stringBuilder = stringBuilder.append(resposeString);
-                }
-
-                rawJSON = stringBuilder.toString();
+                JSON = getJSONfromURL(urlString);
             }
-            catch(IOException e)
-            {
-                e.printStackTrace();
-            }
-
-            return rawJSON;
-
+            return JSON;
         }
 
         @Override
         protected void onPostExecute(String fetchedString)
         {
+            setDisplay();
             setCity(fetchedString);
         }
+    }
+
+    public String getCity(String json)
+    {
+        String city = null;
+
+        try{
+            if(json == null)
+                city = null;
+            else
+            {
+                JSONObject cityObj = new JSONObject(json);
+
+                city = cityObj.optString("geoplugin_place");
+            }
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+            city = null;
+        }
+
+        return city;
+    }
+
+    public String getJSONfromURL(String url)
+    {
+        String json = null;
+
+        try{
+            URL URLobject = new URL(url); //can throw malformed exception
+
+            HttpURLConnection connection = (HttpURLConnection)URLobject.openConnection(); //can throw IO exception
+
+            connection.connect();
+
+            InputStream inputStream = connection.getInputStream();
+            InputStreamReader streamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(streamReader);
+
+            String responseString;
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while((responseString = bufferedReader.readLine()) != null)
+            {
+                stringBuilder = stringBuilder.append(responseString);
+            }
+
+            json = stringBuilder.toString();
+
+            if(json.equals("[[]]"))
+            {
+                return null;
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return  json;
     }
 }
