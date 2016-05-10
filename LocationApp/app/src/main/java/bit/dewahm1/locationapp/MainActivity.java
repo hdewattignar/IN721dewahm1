@@ -42,29 +42,42 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //location manager
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        String locationProvider = LocationManager.NETWORK_PROVIDER;
+        Button getLocation = (Button)findViewById(R.id.btn_location);
+        LocationButtonHandler locationButtonHandler = new LocationButtonHandler();
+        getLocation.setOnClickListener(locationButtonHandler);
+    }
 
-        CurrentLocationListener locationListener = new CurrentLocationListener();
+    public class LocationButtonHandler implements View.OnClickListener
+    {
 
-        //permission checks
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+        @Override
+        public void onClick(View v) {
+            //location manager
+            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            String locationProvider = LocationManager.NETWORK_PROVIDER;
+
+            CurrentLocationListener locationListener = new CurrentLocationListener();
+
+            //permission checks
+            if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+
+            //update
+            locationManager.requestLocationUpdates(locationProvider, 1000, 1, locationListener);
+
+            Location location = locationManager.getLastKnownLocation(locationProvider);
+
+            getLocation(location);
         }
-
-        //update
-        locationManager.requestLocationUpdates(locationProvider, 1000, 1, locationListener);
-
-        Location location = locationManager.getLastKnownLocation(locationProvider);
     }
 
     public class CurrentLocationListener implements LocationListener
