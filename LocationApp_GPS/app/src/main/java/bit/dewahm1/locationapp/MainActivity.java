@@ -1,17 +1,9 @@
 package bit.dewahm1.locationapp;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.AsyncTask;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,7 +22,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Random;
-import java.util.jar.Manifest;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,62 +33,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //location manager
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        String locationProvider = LocationManager.NETWORK_PROVIDER;
-
-        CurrentLocationListener locationListener = new CurrentLocationListener();
-
-        //permission checks
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-
-        //update
-        locationManager.requestLocationUpdates(locationProvider, 1000, 1, locationListener);
-
-        Location location = locationManager.getLastKnownLocation(locationProvider);
+        Button teleport = (Button)findViewById(R.id.btn_teleport);
+        TeleportButtonHandler handler = new TeleportButtonHandler();
+        teleport.setOnClickListener(handler);
     }
 
-    public class CurrentLocationListener implements LocationListener
-    {
-        @Override
-        public void onLocationChanged(Location location) {
-            getLocation(location);
+    public void generateLocation() {
 
-            //execute async thread
-            getCityAsync APIThread = new getCityAsync(MainActivity.this);
-            APIThread.execute();
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-
-        }
-    }
-
-    public void getLocation(Location location) {
-
-        longitude = location.getLongitude();
-        latitude = location.getLatitude();
+        longitude = setLatorLong(90);//max longitude is 90
+        latitude = setLatorLong(180);//max latitude is 180
     }
 
     public void setDisplay(Bitmap image, String city)
@@ -125,6 +69,18 @@ public class MainActivity extends AppCompatActivity {
         latitudeText.setText(Double.toString(latitude));
     }
 
+    public int setLatorLong(int max)
+    {
+        Random rnd = new Random();
+
+        //add two random numbers together and subtract the max value
+        //to get a value that will include negatives
+        int value = (rnd.nextInt(max) + rnd.nextInt(max)) - max;
+
+        return value;
+    }
+
+
     public String setCity(String json)
     {
         String city = null;
@@ -139,6 +95,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return city;
+    }
+
+    private class TeleportButtonHandler implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+
+            //execute async thread
+            getCityAsync APIThread = new getCityAsync(MainActivity.this);
+            APIThread.execute();
+        }
     }
 
     class getCityAsync extends AsyncTask<Void,Void,String>
@@ -167,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
             String JSON = null;
 
             while(getCity(JSON) == null) {
+
+                generateLocation();
 
                 String urlString = "http://www.geoplugin.net/extras/location.gp?" +
                         "lat=" + latitude +
