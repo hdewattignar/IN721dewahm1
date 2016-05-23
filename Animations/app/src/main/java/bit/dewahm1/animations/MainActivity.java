@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.easyandroidanimations.library.BounceAnimation;
+import com.easyandroidanimations.library.ExplodeAnimation;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
 
             ImageView imageAnimate = (ImageView)findViewById(R.id.imageView);
-            new BounceAnimation(imageAnimate).animate();
+            new ExplodeAnimation(imageAnimate).animate();
         }
     }
 }
