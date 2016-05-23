@@ -6,7 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.easyandroidanimations.library.BounceAnimation;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.easyandroidanimations.library.ExplodeAnimation;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,14 +17,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageView imageAnimate = (ImageView)findViewById(R.id.imageView);
+        Button explodeButton = (Button)findViewById(R.id.button);
+        ExplodeButtonHandler explodehandler = new ExplodeButtonHandler();
+        explodeButton.setOnClickListener(explodehandler);
 
-        Button animateButton = (Button)findViewById(R.id.button);
-        ButtonHandler handler = new ButtonHandler();
-        animateButton.setOnClickListener(handler);
+        Button standupButton = (Button)findViewById(R.id.button2);
+        StandupButtonHandler standuphandler = new StandupButtonHandler();
+        standupButton.setOnClickListener(standuphandler);
     }
 
-    public class ButtonHandler implements View.OnClickListener
+    public class ExplodeButtonHandler implements View.OnClickListener
     {
 
         @Override
@@ -31,6 +34,20 @@ public class MainActivity extends AppCompatActivity {
 
             ImageView imageAnimate = (ImageView)findViewById(R.id.imageView);
             new ExplodeAnimation(imageAnimate).animate();
+        }
+    }
+
+    public class StandupButtonHandler implements View.OnClickListener
+    {
+        @Override
+        public void onClick(View v) {
+
+            ImageView imageAnimate = (ImageView)findViewById(R.id.imageView);
+            imageAnimate.setImageResource(R.drawable.motorbike);
+            YoYo.with(Techniques.StandUp)
+                    .duration(700)
+                    .playOn(findViewById(R.id.imageView));
+
         }
     }
 }
