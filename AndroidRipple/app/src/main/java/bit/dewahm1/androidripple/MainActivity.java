@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.skyfishjy.library.RippleBackground;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
