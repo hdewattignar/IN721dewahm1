@@ -12,6 +12,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends AppCompatActivity {
 
+
+
     SupportMapFragment mapFragmant;
     GoogleMap mMap;
     LatLng DunedinLatLong;
