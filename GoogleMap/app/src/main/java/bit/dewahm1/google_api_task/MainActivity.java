@@ -42,8 +42,9 @@ public class MainActivity extends AppCompatActivity {
         {
             mMap = googleMap;
 
+            //add the marker to the map
             mMap.addMarker((new MarkerOptions().position(latLng)));
-
+            //center the marker in the map
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         }
     }
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
-
+        //randomly set the lat and long
         latitude = setLatOrLong(maxLat);
         longitude = setLatOrLong(maxLong);
         latLng = new LatLng(latitude,longitude);
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         mapFragment.getMapAsync(new MapCallBackClass());
     }
 
+    //randomly generate a latitude or longitude
     private double setLatOrLong(int max){
         Random rnd = new Random();
 
